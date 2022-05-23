@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color : #472d30;
+    color : #ffe1a8;
+    display: flex;
+    justify-content: center;
+}
+.main {
+    width: 800px;    
+}
+
+.title {
+    background-color: #723d46;
+    box-shadow: black;
+    border: solid #c9cba3 2px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+.title h1 {
+    margin : 5px;
+}
+
+.score {
+    text-align: center;
+    margin: 25%, 5%, 25%, 5%;
+    padding-top: 5%;
+    font-size: larger
+}
+
+
+.letterbox {
+    background-color: #723d46;
+    background-size: 80%;
+    border: solid #c9cba3 2px;
+    border-radius: 10px;
+    margin: 5% 25% 5px 25%;
+    padding: 20% 25%;
+    size: 50px 50px;
+}
+
+
+.user-interaction {
+    text-align: center;
+}
+.user-interaction button{
+    transition: 0.5s;
+    background-color: #723d46;
+    border: solid #c9cba3 2px;
+    border-radius: 10px;
+    color: #ffe1a8;
+    width: 100px;
+}
+.user-interaction button:hover {
+    background-color: #472d30;
+}
+.user-interaction input {
+    transition: 0.5s;
+    background-color: #723d46;
+    border: solid #c9cba3 2px;
+    color: #ffe1a8;
+    text-align: center;
+    width: 250px;
+    height : 25px
+}
+.user-interaction input:hover {
+    background-color: #472d30;
+}
+
+
+.settings ul {
+    list-style-type: none;
+}
+.settings select {
+    background-color: #723d46;
+    border: solid #c9cba3 2px;
+    border-radius: 5px;
+    color: #ffe1a8;
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <div class="main">
+
+        <div class="title">
+            <h1>ASL fingerspelling</h1>
+        </div>
+
+        <div class="score" id="score">Score : 0</div>
+
+        <div class="letterbox" id="letterbox" style="background-image: none; background-position: 20px;"></div>
+
+        <div class="user-interaction">
+            <div class="buttons">
+                <button id="restart" onclick="display_image()">Restart word</button>
+                <button id="skip" onclick="randomize(); display_image()">Skip word</button>
+                <button>End</button>
+            </div>
+
+            <div class="entry">
+                <p>Enter word here:</p>
+                <input id="guess" type="text" oninput="getGuess()">
+            </div>
+        </div>
+
+        <div class="settings">
+        <ul>
+            <li>
+                <label for="speed">Speed:</label>
+                <select name="speed" id="speed">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </li>
+            <li>
+                <label for="word-length">Word Length:</label>
+                <select name="word-length" id="word-length">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="any">Any</option>
+                </select>
+            </li>
+        </ul>
+        </div>
+
+        <script>
+            // Creating a dictionary to map an
+            // array of words to a number value (length)
+            word_dict = {
+                3 : ['and', 'the', 'end', 'spy', 'now',
+                    'see', 'for', 'try', 'may', 'pop',
+                    'get', 'bin', 'cat', 'pig', 'gap',
+                    'kid', 'art', 'car', 'pot', 'job',
+                    'cut', 'eye', 'air', 'beg', 'gem'],
+
+                4 : ['read', 'four', 'hate', 'exit', 'join',
+                    'look', 'hold', 'many', 'food', 'tree',
+                    'poll', 'slab', 'cell', 'rich', 'glue',
+                    'meat', 'fine', 'well', 'hide', 'rare',
+                    'bank', 'tire', 'goat', 'move', 'fire'],
+
+                5 : ['three', 'brain', 'until', 'enter', 'found',
+                    'bread', 'sight', 'think', 'cause', 'extra',
+                    'upset', 'think', 'drama', 'study', 'cheap',
+                    'check', 'faith', 'creep', 'terms', 'slice',
+                    'throw', 'stand', 'frame', 'start', 'water']
+            };
+
+            // Initializing variables
+            let length;
+            let word;
+            let choice;
+            let last;
+            let score = 0;
+
+            // Gets a random word based on length input
+            // If length is 'any' randomize length
+            function randomize() {
+                length = document.getElementById('word-length').value;
+                if(length == 'any') {
+                    length = Math.floor(Math.random() * 3) + 3
+                }
+                choice = Math.floor(Math.random() * word_dict[length].length);
+                word = word_dict[length][choice];
+            }
+
+            // Fetch user input once the value changes
+            // Compare input to the correct word
+            // Display the 'Correct' image, pause
+            // then clear input box
+            async function getGuess() {
+                let guess = document.getElementById("guess").value;
+                speed = document.getElementById("speed").value;
+                if(guess.toLowerCase() == word){
+                    document.getElementById("letterbox").style.backgroundImage = 'url(images/correct.png)';
+                    score += 1;
+                    document.getElementById('score').textContent = 'score: ' + score;
+                    await wait(1000);
+                    document.getElementById("guess").value="";
+                    randomize();
+                    display_image();
+                }
+            }
+
+           
+            // Creating a timeout function to be used with async
+            function wait(ms) {
+            return new Promise(resolve => {
+                setTimeout(() => resolve(''), ms)
+            })
+            }
+
+            // Looping through the chosen word, changing
+            // the letterbox variables to the appropriate image
+            // per letter, wating between, then clearing image
+            async function display_image() {
+                
+                speed = document.getElementById("speed").value
+                for(let letter = 0; letter < word.length; letter++) {
+                    // Checking for repeated letters, if so, change
+                    // Background position of letterbox
+                    if(last == word[letter]) {
+                        document.getElementById("letterbox").style = 'Background-position: 80px;' 
+                    } 
+                    image = 'images/'+ word[letter] + '.png';
+                    document.getElementById("letterbox").style.backgroundImage = 'url('+image+')';
+                    waiting = await wait(1000/speed);
+                    document.getElementById("letterbox").style = 'Background-position: 20px;';
+                    last = word[letter];
+                }
+                image = 'None';
+                document.getElementById('guess').focus();
+                document.getElementById('guess').select();
+                document.getElementById("letterbox").style.backgroundImage = image;
+            }
+
+            // Code to run on startup, without interaction
+            randomize();
+            display_image();
+            
+            
+        </script>
+    </div>
+    </body>
+</html>
