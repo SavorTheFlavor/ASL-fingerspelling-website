@@ -2,6 +2,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="images/icon.png">
+        <title>Fingerspelling</title>
+        
+        
     </head>
     <body>
     <div class="main">
@@ -13,7 +17,7 @@
         <div class="score" id="score">Score : 0</div>
 
         <div class="letterbox" id="letterbox" style="background-image: none; background-position: 20px;"></div>
-
+    
         <div class="user-interaction">
             <div class="buttons">
                 <button id="restart" onclick="display_image()">Restart word</button>
@@ -79,6 +83,13 @@
             let choice;
             let last;
             let score = 0;
+            
+            // Creating a timeout function to be used with async
+            function wait(ms) {
+            return new Promise(resolve => {
+                setTimeout(() => resolve(''), ms)
+            })
+            }
 
             // Gets a random word based on length input
             // If length is 'any' randomize length
@@ -109,14 +120,6 @@
                 }
             }
 
-           
-            // Creating a timeout function to be used with async
-            function wait(ms) {
-            return new Promise(resolve => {
-                setTimeout(() => resolve(''), ms)
-            })
-            }
-
             // Looping through the chosen word, changing
             // the letterbox variables to the appropriate image
             // per letter, wating between, then clearing image
@@ -137,7 +140,6 @@
                 }
                 image = 'None';
                 document.getElementById('guess').focus();
-                document.getElementById('guess').select();
                 document.getElementById("letterbox").style.backgroundImage = image;
             }
 
